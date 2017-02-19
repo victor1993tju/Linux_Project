@@ -1,3 +1,5 @@
+all: parents son daughter children
+.PHONY : clean
 
 parents: parents.o lockit.o
 	cc -o parents parents.o lockit.o -lpthread
@@ -20,5 +22,13 @@ daughter:daughter.o lockit.o
 daughter.o:daughter.c
 	cc -c daughter.c
 
-children:children.c
-	cc -o children.c
+children : children.o
+	cc -o children  children.o
+children.o : children.c
+	cc -c children.c
+
+clean: 
+	rm -f *.o
+	rm son daughter children parents  
+
+
