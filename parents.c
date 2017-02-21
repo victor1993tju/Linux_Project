@@ -22,7 +22,7 @@
 #define INFOSIZE 256000 
 #define NUMFILEDES 2000 
 const char * fruit[8] ={ "orange","apple"};
-const char * FilePath = "/home/user01/victor/project/daemons.log";
+const char * FilePath = "./daemons.log";
 int semid;
 int shmid;
 extern int locker(int num);
