@@ -8,7 +8,12 @@
 ###Design communication method between process and thread,Using Semaphore of System V standard.
 ##Trick：
 ### Using gdb to debug program. add '-g' when compile program, then you can using gdb. 
-##### 'l' : view the source code.
-##### 'break n': set break point in nth line. e.g. break 12
-##### 'n' step running 
+##### input 'gdb' change to debug mode. Then e.g.'file parents' load the execuable file to gdb. Or input 'gdb parents'
+##### 'l'or 'list' : view the source code.
+##### 'b n'or 'break n': set break point in nth line. e.g. break 12
+##### 'd' delete all breakpoint s. 'd n' delete No.n break point. we can use info b see all the breakpoints.
+##### 'n' next or 's' step running ,'c' continue
 ##### 'r' run program.
+##### 'p val_name' see the value of val_name.
+### using gcc to compile program.
+##### '-c' means generate .o file. '-o' means generate executable file.
