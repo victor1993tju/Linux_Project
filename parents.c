@@ -16,12 +16,13 @@
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <signal.h>
+#include <syslog.h>
 #define SEMKEY 6666
 #define MAX_TIME 30
 #define SHMKEY 333333L 
 #define INFOSIZE 256000 
 #define NUMFILEDES 2000 
-const char * fruit[8] ={ "orange","apple"};
+const char * fruit[8] ={ "orange","apple"};/*8 means the maximum lenght of string*/
 const char * FilePath = "./daemons.log";
 int semid;
 int shmid;
@@ -62,7 +63,6 @@ void *parent(void *arg){
 		exit(1);} 
 		else{printf("a fruit has been placed in plate");}
 
-
 		if (locker(index)  != 0) { 
    		perror("Problems unlocking sem "); 
 		exit(1); }
@@ -73,6 +73,7 @@ void *parent(void *arg){
 }
 int main(int argc,char *argv[]){
 /*	init_daemon();*/
+	openlog("daemonOutput",LOG_PID,LOG_DAEMON);
 	int fd; 
 	signal(SIGTTOU,SIG_IGN); 
 	signal(SIGTTIN,SIG_IGN); 
@@ -88,7 +89,7 @@ int main(int argc,char *argv[]){
 	close(fd); 
  	chdir("/"); 
 	umask(0); 
-
+	syslog(LOG_INFO,"daemon has been initialed");
 	int value;
 	pthread_t pidF,pidM;
 /*	pthread_t pidM;*/
@@ -109,6 +110,7 @@ int main(int argc,char *argv[]){
 	semctl(semid,0,SETVAL,2);
 	semctl(semid,1,SETVAL,0);
 	semctl(semid,2,SETVAL,0);
+/*used in debugging in terminal*/
 	value =	semctl(semid,0,GETVAL,NULL);
 	 printf("create,value is %d\n",value);
 	value = semctl(semid,1,GETVAL,NULL);
@@ -120,15 +122,7 @@ int main(int argc,char *argv[]){
 	pthread_create(&pidF,NULL,parent,(void *)2); 
 	pthread_join(pidM,NULL);
 	pthread_join(pidF,NULL);
-		
-/*	sleep(MAX_TIME);*/
-	value =	semctl(semid,0,GETVAL,NULL);
-	 printf("value is %d\n",value);
-	value = semctl(semid,1,GETVAL,NULL);
-	 printf("value is %d\n",value);
-	value = semctl(semid,2,GETVAL,NULL);
-	 printf("value is %d\n",value);
-
+	closelog();	
         /*exit(0)*/;
         return 0;
 
