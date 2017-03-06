@@ -6,6 +6,8 @@
 ### Design a daemon process for parents, it used to put fruits in plate,it contains 2 thread called 'mother' and 'father' 
 ###Design a client process called 'children',it contains two subprocesss i.e. 'son' and 'daughter'.every subprocess has two thread for indicate two sons and two danghters.
 ###Design communication method between process and thread,Using Semaphore of System V standard.
+## Notice:
+#### you need to compile and run program in root mode.beacause we used daemon process.
 ##Trick：
 ### Using gdb to debug program. add '-g' when compile program, then you can using gdb. 
 ##### input 'gdb' change to debug mode. Then e.g.'file parents' load the execuable file to gdb. Or input 'gdb parents'
@@ -17,3 +19,11 @@
 ##### 'p val_name' see the value of val_name.
 ### using gcc to compile program.
 ##### '-c' means generate .o file. '-o' means generate executable file.
+
+### some useful commands
+#### killall ***  *** is the name of process. we can use this command to kill daemon process.
+#### ps -aux      list all the running process
+
+### using syslog to debug daemon process.
+#### tail -f /var/log/messages   see log file in realtime
+#### syslog(LOG_INFO,"content")  
