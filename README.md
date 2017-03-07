@@ -27,3 +27,5 @@
 ### using syslog to debug daemon process.
 #### tail -f /var/log/messages   see log file in realtime
 #### syslog(LOG_INFO,"content")  
+## Bugs I meet
+#### daemon can not run in others' computers.-- change to root mode 
